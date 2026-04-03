@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Untyped — speak it. send it.</title>
+  <meta name="description" content="Untyped turns your voice into a ready-to-send professional email in seconds. No typing, no structuring — just speak naturally." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0e1621;
+      --card: #131d2e;
+      --border: rgba(255,255,255,0.08);
+      --accent: #5de0a5;
+      --text: #e8edf5;
+      --muted: #5a6a82;
+      --secondary: #8a9ab5;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(14, 22, 33, 0.85);
+      backdrop-filter: blur(16px);
+    }
+
+    .wordmark {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+
+    .wordmark span { color: var(--accent); font-style: italic; }
+
+    .nav-link {
+      font-size: 12px;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--accent); }
+
+    /* hero */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 24px 80px;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      color: var(--text);
+      max-width: 800px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+
+    .hero-title em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .hero-sub {
+      margin-top: 28px;
+      font-size: 16px;
+      color: var(--secondary);
+      max-width: 480px;
+      line-height: 1.8;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+
+    .hero-cta {
+      margin-top: 48px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 100px;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      font-weight: 400;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      border: 1px solid var(--accent);
+    }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--secondary);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* glow */
+    .glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(93,224,165,0.06) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      pointer-events: none;
+    }
+
+    /* steps */
+    .section {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 48px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      transition: border-color 0.2s;
+    }
+    .step:hover { border-color: rgba(93,224,165,0.25); }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(93,224,165,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .step-title {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: var(--secondary);
+      line-height: 1.7;
+    }
+
+    /* privacy */
+    .privacy {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .privacy h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 36px;
+      font-weight: 400;
+      letter-spacing: -0.5px;
+      margin-bottom: 32px;
+    }
+
+    .privacy h3 {
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 32px 0 12px;
+    }
+
+    .privacy p {
+      font-size: 14px;
+      color: var(--secondary);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .privacy a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .privacy a:hover { text-decoration: underline; }
+
+    /* footer */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 32px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    footer p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      footer { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="wordmark">un<span>typed</span></a>
+    <a href="#privacy" class="nav-link">Privacy</a>
+  </nav>
+
+  <section class="hero">
+    <div class="glow"></div>
+    <p class="hero-eyebrow">Now available on Android</p>
+    <h1 class="hero-title">speak it.<br><em>send it.</em></h1>
+    <p class="hero-sub">Untyped turns your voice into a ready-to-send professional email in seconds. No typing, no structuring — just speak naturally.</p>
+    <div class="hero-cta">
+      <a href="https://play.google.com/store/apps/details?id=com.cronenka.untyped" class="btn btn-primary">Get it on Google Play →</a>
+      <a href="#how" class="btn btn-ghost">How it works</a>
+    </div>
+  </section>
+
+  <section class="section" id="how">
+    <p class="section-label">How it works</p>
+    <h2 class="section-title">Four steps.<br>One email.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <p class="step-title">Tap the mic</p>
+        <p class="step-desc">Speak naturally — say what you need to communicate, as if talking to a friend.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <p class="step-title">Pick your tone</p>
+        <p class="step-desc">Choose from formal, casual, friendly, or direct. Pick your intent — send now, schedule, or draft.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <p class="step-title">Get your email</p>
+        <p class="step-desc">A polished, ready-to-send email appears in seconds — subject line and all.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <p class="step-title">Send it</p>
+        <p class="step-desc">Send directly via Gmail, copy to clipboard, or open in your email app.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="privacy" id="privacy">
+    <h2>Privacy Policy</h2>
+    <p>Last updated: April 2026</p>
+
+    <h3>Overview</h3>
+    <p>Untyped ("the app") is operated by Cronenka. We take your privacy seriously. This policy explains what data we collect, how we use it, and your rights.</p>
+
+    <h3>Data we collect</h3>
+    <p>We collect only a anonymised identifier (your Google account ID) and a count of emails generated. We do not collect your name, email address, or any personal information.</p>
+
+    <h3>Voice recordings</h3>
+    <p>Voice recordings are processed in real time and never stored on our servers. Audio is sent to Deepgram for transcription and immediately discarded. See <a href="https://deepgram.com/privacy" target="_blank">Deepgram's Privacy Policy</a> for details.</p>
+
+    <h3>Email content</h3>
+    <p>Email content is generated using Anthropic Claude and is never stored on our servers. See <a href="https://www.anthropic.com/privacy" target="_blank">Anthropic's Privacy Policy</a> for details.</p>
+
+    <h3>Gmail access</h3>
+    <p>If you connect your Gmail account, we request permission only to send emails on your behalf. We never read, store, or access your inbox or existing emails. You can revoke access at any time from your <a href="https://myaccount.google.com/permissions" target="_blank">Google Account settings</a>.</p>
+
+    <h3>Third-party services</h3>
+    <p>The app uses the following third-party services: Deepgram (transcription), Anthropic Claude (email generation), Google Sign-In (authentication), RevenueCat (subscription management).</p>
+
+    <h3>Your rights</h3>
+    <p>You can request deletion of your usage data at any time by contacting us at <a href="mailto:privacy@untypedapp.com">privacy@untypedapp.com</a>.</p>
+
+    <h3>Contact</h3>
+    <p>For any privacy questions, contact <a href="mailto:privacy@untypedapp.com">privacy@untypedapp.com</a>.</p>
+  </section>
+
+  <footer>
+    <p>© 2026 Cronenka. Made with care · Dublin, Ireland.</p>
+    <p><a href="#privacy" style="color: var(--muted); text-decoration: none;">Privacy Policy</a></p>
+  </footer>
+
+</body>
+</html>
