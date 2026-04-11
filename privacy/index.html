@@ -9,120 +9,26 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #111111;
-      --card: #1a1a1a;
-      --border: rgba(255,255,255,0.08);
-      --accent: #7b6fff;
-      --text: #ffffff;
-      --muted: #777777;
-      --secondary: #bbbbbb;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Mono', monospace;
-      font-weight: 300;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 40px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(17,17,17,0.88);
-      backdrop-filter: blur(16px);
-    }
-
-    .wordmark {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--text);
-      text-decoration: none;
-      letter-spacing: -0.5px;
-    }
+    :root { --bg: #111111; --card: #1a1a1a; --border: rgba(255,255,255,0.08); --accent: #7b6fff; --text: #ffffff; --muted: #777777; --secondary: #bbbbbb; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; font-weight: 300; line-height: 1.6; min-height: 100vh; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 20px 40px; border-bottom: 1px solid var(--border); background: rgba(17,17,17,0.88); backdrop-filter: blur(16px); }
+    .wordmark { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 22px; font-weight: 800; color: var(--text); text-decoration: none; letter-spacing: -0.5px; }
     .wordmark .wm-un { color: var(--text); }
     .wordmark .wm-typed { color: var(--accent); }
-
-    .nav-link {
-      font-size: 12px;
-      letter-spacing: 0.8px;
-      color: var(--muted);
-      text-decoration: none;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
+    .nav-link { font-size: 12px; letter-spacing: 0.8px; color: var(--muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
     .nav-link:hover { color: var(--accent); }
-
-    .privacy {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 120px 24px 80px;
-    }
-
-    .privacy h1 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 600;
-      letter-spacing: -1px;
-      margin-bottom: 8px;
-    }
-
-    .privacy .updated {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 48px;
-    }
-
-    .privacy h2 {
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin: 36px 0 12px;
-      font-weight: 500;
-    }
-
-    .privacy p {
-      font-size: 14px;
-      color: var(--secondary);
-      line-height: 1.85;
-      margin-bottom: 12px;
-    }
-
-    .privacy a {
-      color: var(--accent);
-      text-decoration: none;
-    }
+    .privacy { max-width: 720px; margin: 0 auto; padding: 120px 24px 80px; }
+    .privacy h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(28px, 4vw, 42px); font-weight: 600; letter-spacing: -1px; margin-bottom: 8px; }
+    .privacy .updated { font-size: 12px; color: var(--muted); margin-bottom: 48px; }
+    .privacy h2 { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin: 36px 0 12px; font-weight: 500; }
+    .privacy p { font-size: 14px; color: var(--secondary); line-height: 1.85; margin-bottom: 12px; }
+    .privacy a { color: var(--accent); text-decoration: none; }
     .privacy a:hover { text-decoration: underline; }
-
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 32px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
+    footer { border-top: 1px solid var(--border); padding: 32px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
     footer p { font-size: 12px; color: var(--muted); }
     footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
     footer a:hover { color: var(--accent); }
-
-    @media (max-width: 600px) {
-      nav { padding: 16px 20px; }
-      footer { padding: 24px 20px; }
-    }
+    @media (max-width: 600px) { nav { padding: 16px 20px; } footer { padding: 24px 20px; } }
   </style>
 </head>
 <body>
@@ -151,17 +57,20 @@
     <h2>Gmail access</h2>
     <p>If you connect your Gmail account, we request permission only to send emails on your behalf. We never read, store, or access your inbox or existing emails. You can revoke access at any time from your <a href="https://myaccount.google.com/permissions" target="_blank">Google Account settings</a>.</p>
 
+    <h2>Outlook access</h2>
+    <p>If you connect your Outlook account, we request permission only to send emails on your behalf using the Microsoft Graph Mail.Send scope. We never read, store, or access your inbox or existing emails. You can revoke access at any time from your <a href="https://account.microsoft.com/privacy" target="_blank">Microsoft Account settings</a>. See <a href="https://privacy.microsoft.com/en-us/privacystatement" target="_blank">Microsoft's Privacy Statement</a> for details.</p>
+
     <h2>Usage data</h2>
     <p>We use Supabase to store your anonymised Google account ID and a count of emails generated. This is used solely to manage free tier usage limits. No other personal data is stored. See <a href="https://supabase.com/privacy" target="_blank">Supabase's Privacy Policy</a> for details.</p>
 
     <h2>Third-party services</h2>
-    <p>The app uses the following third-party services: Deepgram (transcription), Anthropic Claude (email generation), Google Sign-In (authentication), Supabase (usage tracking), RevenueCat (subscription management).</p>
+    <p>The app uses the following third-party services: Deepgram (transcription), Anthropic Claude (email generation), Google Sign-In (authentication), Microsoft Identity Platform (Outlook authentication), Supabase (usage tracking), RevenueCat (subscription management).</p>
 
     <h2>Your rights</h2>
-    <p>You can request deletion of your usage data at any time by contacting us at <a href="mailto:privacy@untypedapp.com">privacy@untypedapp.com</a>.</p>
+    <p>You can request deletion of your usage data at any time by contacting us at <a href="mailto:untypedapp@gmail.com">untypedapp@gmail.com</a>.</p>
 
     <h2>Contact</h2>
-    <p>For any privacy questions, contact <a href="mailto:privacy@untypedapp.com">privacy@untypedapp.com</a>.</p>
+    <p>For any privacy questions, contact <a href="mailto:untypedapp@gmail.com">untypedapp@gmail.com</a>.</p>
   </div>
 
   <footer>
